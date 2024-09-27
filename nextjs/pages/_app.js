@@ -8,6 +8,7 @@ import Layout from "@/components/layout";
 import useBearStore from "@/store/useBearStore";
 import Head from "next/head";
 import { Backdrop, CircularProgress } from "@mui/material";
+import { CSSTransition, TransitionGroup } from "react-transition-group"; // Import for transitions
 
 const roboto = Roboto({
   weight: ["300", "400", "500", "700"],
@@ -22,19 +23,32 @@ const theme = createTheme({
   },
 });
 
-export default function App({ Component, pageProps, props }) {
+export default function App({ Component, pageProps }) {
   const router = useRouter();
   const [loading, setLoading] = React.useState(false);
   const setAppName = useBearStore((state) => state.setAppName);
   const pageName = router.pathname;
+  const [key, setKey] = React.useState(pageName); // Key for transition
 
   React.useEffect(() => {
     console.log("App load", pageName, router.query);
     setLoading(true);
-    // TODO: This section is use to handle page change.
-    setAppName("Say Hi")
+    // Set the app name
+    setAppName("VALUE INVESTING SCREENER");
     setLoading(false);
   }, [router, pageName]);
+
+  React.useEffect(() => {
+    const handleRouteChange = (url) => {
+      setKey(url); // Update key on route change
+    };
+
+    router.events.on("routeChangeComplete", handleRouteChange);
+
+    return () => {
+      router.events.off("routeChangeComplete", handleRouteChange);
+    };
+  }, [router]);
 
   return (
     <React.Fragment>
@@ -45,10 +59,14 @@ export default function App({ Component, pageProps, props }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <AppCacheProvider {...props}>
+      <AppCacheProvider>
         <ThemeProvider theme={theme}>
           <Layout>
-            <Component {...pageProps} />
+            <TransitionGroup>
+              <CSSTransition key={key} classNames="page" timeout={300}>
+                <Component {...pageProps} />
+              </CSSTransition>
+            </TransitionGroup>
           </Layout>
         </ThemeProvider>
       </AppCacheProvider>
