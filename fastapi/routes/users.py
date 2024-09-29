@@ -1,19 +1,26 @@
 from fastapi import APIRouter, FastAPI, HTTPException
 from pydantic import BaseModel
-from typing import Optional
+from typing import Optional, List
 from datetime import datetime
 from database import *  # Ensure your database functions are imported
 
-
 router = APIRouter()
 
+# Pydantic model for user response
+class User(BaseModel):
+    user_id: int
+    username: str
+    password_hash: str
+    email: str
+    created_at: datetime
+    status: int  # Include status in the user response
 
-# Pydantic model for user creation
-class UserCreate(BaseModel):
-   username: str
-   password_hash: str
-   email: str
-
+# Endpoint to get all users
+@router.get("/users", response_model=List[User])
+async def read_users():
+    query = "SELECT * FROM users"  # Adjust based on your database query method
+    users = await database.fetch_all(query)  # Fetch all users
+    return users
 
 # Pydantic model for user update
 class UserUpdate(BaseModel):
@@ -24,11 +31,12 @@ class UserUpdate(BaseModel):
 
 # Pydantic model for user response
 class User(BaseModel):
-   user_id: int
-   username: str
-   password_hash: str
-   email: str
-   created_at: datetime
+    user_id: int
+    username: str
+    password_hash: str
+    email: str
+    created_at: datetime
+    status: int  # Include status in the user response
 
 
 # Pydantic model for login
@@ -89,10 +97,10 @@ async def update_user_endpoint(user_id: int, user: UserUpdate):
 # Endpoint to delete a user
 @router.delete("/users/{user_id}")
 async def delete_user_endpoint(user_id: int):
-   result = await delete_user(user_id)
-   if result is None:
-       raise HTTPException(status_code=404, detail="User not found")
-   return {"detail": "User deleted"}
+    result = await delete_user(user_id)
+    if result is None:
+        raise HTTPException(status_code=404, detail="User not found")
+    return {"detail": "User deleted"}
 
 
 # Endpoint for user login

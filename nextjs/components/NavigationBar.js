@@ -4,10 +4,12 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import Image from "next/image";
 
-//material UI
+// Material UI icons
 import PersonIcon from "@mui/icons-material/Person";
-import useBearStore from "@/store/useBearStore";
 import ListIcon from '@mui/icons-material/List';
+import SettingsIcon from '@mui/icons-material/Settings'; // Gear icon
+
+import useBearStore from "@/store/useBearStore";
 
 const NavigationLayout = ({ children }) => {
   const router = useRouter();
@@ -26,40 +28,39 @@ const NavigationLayout = ({ children }) => {
     <>
       <AppBar position="sticky" sx={{ backgroundColor: "#242323" }}>
         <Toolbar>
-        <Link href="/" passHref>
-        <Box component="span" sx={{ width: "20px" }} />
+          <Link href="/" passHref>
+            <Box component="span" sx={{ width: "20px" }} />
             <Image 
               src="/VIS.png"  
               alt="App Logo"
               width={60}        
               height={60}       
               style={{ cursor: "pointer" }}
-
             />
           </Link>
 
           <Typography
-              variant="body1"
-              sx={{ fontSize: "22px", fontWeight: 500, color: "#ffffff", padding: "0 10px", fontFamily: "Montserrat" }}
-            >
-              {/* {appName} */}
-            </Typography>
+            variant="body1"
+            sx={{ fontSize: "22px", fontWeight: 500, color: "#ffffff", padding: "0 10px", fontFamily: "Montserrat" }}
+          >
+            {appName}
+          </Typography>
 
           <Link href="/display" passHref>
-                <Button
-                  sx={{
-                    color: "#ffffff",
-                    textTransform: "capitalize",
-                    transition: "0.3s",
-                    "&:hover": {
-                      backgroundColor: "#333333", // Change to grey when hovered
-                      color: "#ffffff",
-                    },
-                  }}
-                >
-                  <ListIcon sx={{ marginRight: "5px" }} /> Display
-                </Button>
-              </Link>
+            <Button
+              sx={{
+                color: "#ffffff",
+                textTransform: "capitalize",
+                transition: "0.3s",
+                "&:hover": {
+                  backgroundColor: "#333333",
+                  color: "#ffffff",
+                },
+              }}
+            >
+              <ListIcon sx={{ marginRight: "5px" }} /> Display
+            </Button>
+          </Link>
 
           <Box sx={{ flexGrow: 1 }} />
           {!isLoggedIn ? (
@@ -70,11 +71,11 @@ const NavigationLayout = ({ children }) => {
                     color: "#ffffff",
                     textTransform: "capitalize",
                     transition: "0.3s",
-                    border: "1px solid #707070", // Add border when not hovered
+                    border: "1px solid #707070",
                     "&:hover": {
-                      backgroundColor: "#333333", // Change to grey when hovered
+                      backgroundColor: "#333333",
                       color: "#ffffff",
-                      border: "none", // Remove border when hovered
+                      border: "none",
                     },
                   }}
                 >
@@ -90,11 +91,11 @@ const NavigationLayout = ({ children }) => {
                     color: "#ffffff",
                     textTransform: "capitalize",
                     transition: "0.3s",
-                    border: "1px solid #707070", // Add border when not hovered
+                    border: "1px solid #707070",
                     "&:hover": {
-                      backgroundColor: "#333333", // Change to grey when hovered
+                      backgroundColor: "#333333",
                       color: "#ffffff",
-                      border: "none", // Remove border when hovered
+                      border: "none",
                     },
                   }}
                 >
@@ -104,10 +105,33 @@ const NavigationLayout = ({ children }) => {
             </>
           ) : (
             <>
-              <Avatar sx={{ marginRight: 1 }}>{username.charAt (0)}</Avatar> 
+              <Avatar sx={{ marginRight: 1 }}>{username.charAt(0)}</Avatar> 
               <Typography sx={{ color: "#ffffff", padding: "0 10px", fontStyle: "italic" }}>
                 {isAdmin ? `Welcome Admin, ${username}` : `Welcome, ${username}`}
               </Typography>
+
+              <Box component="span" sx={{ width: "10px" }} />
+
+              {isAdmin && (
+                <Link href="/admin/users" passHref>
+                  <Button
+                    sx={{
+                      color: "#ffffff",
+                      textTransform: "capitalize",
+                      transition: "0.3s",
+                      border: "1px solid #707070",
+                      "&:hover": {
+                        backgroundColor: "#333333",
+                        color: "#ffffff",
+                        border: "none",
+                      },
+                    }}
+                  >
+                    <SettingsIcon sx={{ marginRight: "5px" }} /> {/* Gear icon for admin */}
+                    Manage Users
+                  </Button>
+                </Link>
+              )}
 
               <Box component="span" sx={{ width: "10px" }} />
 
@@ -116,11 +140,11 @@ const NavigationLayout = ({ children }) => {
                   color: "#ffffff",
                   textTransform: "capitalize",
                   transition: "0.3s",
-                  border: "1px solid #707070", // Add border when not hovered
+                  border: "1px solid #707070",
                   "&:hover": {
-                    backgroundColor: "#333333", // Change to grey when hovered
+                    backgroundColor: "#333333",
                     color: "#ffffff",
-                    border: "none", // Remove border when hovered
+                    border: "none",
                   },
                 }}
                 onClick={handleLogout}
@@ -135,22 +159,5 @@ const NavigationLayout = ({ children }) => {
     </>
   );
 };
-
-const NavigationLink = ({ href, label }) => (
-  <Link href={href} passHref>
-    <Typography
-      variant="body1"
-      sx={{
-        fontSize: "14px",
-        fontWeight: 500,
-        color: "#ffffff",
-        padding: "0 10px",
-        cursor: "pointer",
-      }}
-    >
-      {label}
-    </Typography>
-  </Link>
-);
 
 export default NavigationLayout;
