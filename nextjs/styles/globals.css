@@ -3,11 +3,13 @@
   src: url('/Prompt/Prompt-Regular.ttf') format('truetype'),
        url('/Prompt/Prompt-Medium.ttf') format('truetype'),
        url('/Prompt/Prompt-Light.ttf') format('truetype'),
-       url('/Prompt/Prompt-Thin.ttf') format('truetype')
-  ;
+       url('/Prompt/Prompt-Thin.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
+
+/* Import Poppins from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
 .swal2-popup {
   font-size: 1rem !important;
@@ -15,14 +17,14 @@
 }
 
 :root {
-  --font-family: 'Roboto', sans-serif;
+  --font-family: 'Poppins', sans-serif; /* Set Poppins as the primary font */
 }
 
 html, body {
   margin: 0;
   padding: 0;
-  font-family: var(--font-family); /* Apply the font globally */
-  background-color: rgb(255, 255, 255);
+  font-family: var(--font-family); /* Apply the new font globally */
+  background-color: #000;
 }
 
 /* styles/globals.css */

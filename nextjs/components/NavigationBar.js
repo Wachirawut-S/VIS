@@ -5,7 +5,6 @@ import Link from "next/link";
 import Image from "next/image";
 
 //material UI
-import FunctionsIcon from "@mui/icons-material/Functions";
 import PersonIcon from "@mui/icons-material/Person";
 import useBearStore from "@/store/useBearStore";
 import ListIcon from '@mui/icons-material/List';
@@ -32,20 +31,19 @@ const NavigationLayout = ({ children }) => {
             <Image 
               src="/VIS.png"  
               alt="App Logo"
-              width={40}        
-              height={40}       
+              width={60}        
+              height={60}       
               style={{ cursor: "pointer" }}
 
             />
           </Link>
-          <Box component="span" sx={{ width: "20px" }} />
+
           <Typography
-            variant="body1"
-            sx={{ fontSize: "22px", fontWeight: 500, color: "#ffffff", padding: "0 10px", fontFamily: "Prompt" }}
-          >
-            
-            {appName}
-          </Typography>
+              variant="body1"
+              sx={{ fontSize: "22px", fontWeight: 500, color: "#ffffff", padding: "0 10px", fontFamily: "Montserrat" }}
+            >
+              {/* {appName} */}
+            </Typography>
 
           <Link href="/display" passHref>
                 <Button
@@ -72,7 +70,7 @@ const NavigationLayout = ({ children }) => {
                     color: "#ffffff",
                     textTransform: "capitalize",
                     transition: "0.3s",
-                    border: "1px solid #cccccc", // Add border when not hovered
+                    border: "1px solid #707070", // Add border when not hovered
                     "&:hover": {
                       backgroundColor: "#333333", // Change to grey when hovered
                       color: "#ffffff",
@@ -92,7 +90,7 @@ const NavigationLayout = ({ children }) => {
                     color: "#ffffff",
                     textTransform: "capitalize",
                     transition: "0.3s",
-                    border: "1px solid #cccccc", // Add border when not hovered
+                    border: "1px solid #707070", // Add border when not hovered
                     "&:hover": {
                       backgroundColor: "#333333", // Change to grey when hovered
                       color: "#ffffff",
@@ -106,7 +104,7 @@ const NavigationLayout = ({ children }) => {
             </>
           ) : (
             <>
-              <Avatar sx={{ marginRight: 1 }}>{username.charAt(0)}</Avatar> 
+              <Avatar sx={{ marginRight: 1 }}>{username.charAt (0)}</Avatar> 
               <Typography sx={{ color: "#ffffff", padding: "0 10px", fontStyle: "italic" }}>
                 {isAdmin ? `Welcome Admin, ${username}` : `Welcome, ${username}`}
               </Typography>
@@ -118,7 +116,7 @@ const NavigationLayout = ({ children }) => {
                   color: "#ffffff",
                   textTransform: "capitalize",
                   transition: "0.3s",
-                  border: "1px solid #cccccc", // Add border when not hovered
+                  border: "1px solid #707070", // Add border when not hovered
                   "&:hover": {
                     backgroundColor: "#333333", // Change to grey when hovered
                     color: "#ffffff",
