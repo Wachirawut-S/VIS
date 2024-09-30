@@ -33,8 +33,3 @@ async def startup():
 @app.on_event("shutdown")
 async def shutdown():
     await disconnect_db()  # Disconnect from the database
-
-
-@app.on_event("shutdown")
-async def shutdown():
-    await disconnect_db()
