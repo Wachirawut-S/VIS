@@ -7,8 +7,10 @@ import Image from "next/image";
 // Material UI icons
 import PersonIcon from "@mui/icons-material/Person";
 import ListIcon from '@mui/icons-material/List';
-import SettingsIcon from '@mui/icons-material/Settings'; // Gear icon
-
+import SettingsIcon from '@mui/icons-material/Settings';
+import TrendingUpIcon from '@mui/icons-material/TrendingUp';
+import CalculateIcon from '@mui/icons-material/Calculate';
+import PeopleIcon from '@mui/icons-material/People';
 import useBearStore from "@/store/useBearStore";
 
 const NavigationLayout = ({ children }) => {
@@ -43,13 +45,13 @@ const NavigationLayout = ({ children }) => {
             variant="body1"
             sx={{ fontSize: "22px", fontWeight: 500, color: "#ffffff", padding: "0 10px", fontFamily: "Montserrat" }}
           >
-            {appName}
           </Typography>
 
-          <Link href="/display" passHref>
+          <Link href="/" passHref>
             <Button
               sx={{
                 color: "#ffffff",
+                border: "1px solid #707070",
                 textTransform: "capitalize",
                 transition: "0.3s",
                 "&:hover": {
@@ -59,6 +61,70 @@ const NavigationLayout = ({ children }) => {
               }}
             >
               <ListIcon sx={{ marginRight: "5px" }} /> Display
+            </Button>
+          </Link>
+          <Box component="span" sx={{ width: "10px" }} />
+          <Link href="/S&P500" passHref>
+            <Button
+              sx={{
+                color: "#ffffff",
+                border: "1px solid #707070",
+                textTransform: "capitalize",
+                transition: "0.3s",
+                "&:hover": {
+                  backgroundColor: "#333333",
+                  color: "#ffffff",
+                },
+              }}
+            ><TrendingUpIcon sx={{ marginRight: "5px" }}/> S&P500
+            </Button>
+          </Link>
+          <Box component="span" sx={{ width: "10px" }} />
+          <Link href="/Nasdaq100" passHref>
+            <Button
+              sx={{
+                color: "#ffffff",
+                textTransform: "capitalize",
+                border: "1px solid #707070",
+                transition: "0.3s",
+                "&:hover": {
+                  backgroundColor: "#333333",
+                  color: "#ffffff",
+                },
+              }}
+            ><TrendingUpIcon sx={{ marginRight: "5px" }}/> Nasdaq100
+            </Button>
+          </Link>
+          <Box component="span" sx={{ width: "10px" }} />
+          <Link href="/" passHref>
+            <Button
+              sx={{
+                color: "#ffffff",
+                textTransform: "capitalize",
+                border: "1px solid #707070",
+                transition: "0.3s",
+                "&:hover": {
+                  backgroundColor: "#333333",
+                  color: "#ffffff",
+                },
+              }}
+            ><CalculateIcon sx={{ marginRight: "5px" }}/> Calculator
+            </Button>
+          </Link>
+          <Box component="span" sx={{ width: "10px" }} />
+          <Link href="/" passHref>
+            <Button
+              sx={{
+                color: "#ffffff",
+                textTransform: "capitalize",
+                border: "1px solid #707070",
+                transition: "0.3s",
+                "&:hover": {
+                  backgroundColor: "#333333",
+                  color: "#ffffff",
+                },
+              }}
+            ><PeopleIcon sx={{ marginRight: "5px" }}/> Community
             </Button>
           </Link>
 
@@ -85,7 +151,7 @@ const NavigationLayout = ({ children }) => {
 
               <Box component="span" sx={{ width: "10px" }} />
               
-              <Link href="/login" passHref>
+              <Link href="/" passHref>
                 <Button
                   sx={{
                     color: "#ffffff",

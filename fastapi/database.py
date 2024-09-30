@@ -29,7 +29,7 @@ async def disconnect_db():
     await database.disconnect()
     print("Database disconnected")
 
-# Function to insert a new user into the users table
+# User-related functions
 async def insert_user(username: str, password_hash: str, email: str, status: int = 0):
     query = """
     INSERT INTO users (username, password_hash, email, status)
@@ -39,22 +39,18 @@ async def insert_user(username: str, password_hash: str, email: str, status: int
     values = {"username": username, "password_hash": password_hash, "email": email, "status": status}
     return await database.fetch_one(query=query, values=values)
 
-# Function to select a user by username from the users table
 async def get_user(username: str):
     query = "SELECT * FROM users WHERE username = :username"
     return await database.fetch_one(query=query, values={"username": username})
 
-# Function to select a user by user_id from the users table
 async def get_user_by_id(user_id: int):
     query = "SELECT * FROM users WHERE user_id = :user_id"
     return await database.fetch_one(query=query, values={"user_id": user_id})
 
-# Function to select a user by email from the users table
 async def get_user_by_email(email: str):
     query = "SELECT * FROM users WHERE email = :email"
     return await database.fetch_one(query=query, values={"email": email})
 
-# Function to update a user in the users table
 async def update_user(user_id: int, username: str, password_hash: str, email: str):
     query = """
     UPDATE users
@@ -65,7 +61,17 @@ async def update_user(user_id: int, username: str, password_hash: str, email: st
     values = {"user_id": user_id, "username": username, "password_hash": password_hash, "email": email}
     return await database.fetch_one(query=query, values=values)
 
-# Function to delete a user from the users table
 async def delete_user(user_id: int):
     query = "DELETE FROM users WHERE user_id = :user_id RETURNING *"
     return await database.fetch_one(query=query, values={"user_id": user_id})
+
+# Function to select all in indexfunds
+async def get_all_sp500():
+    query = "SELECT * FROM SP500"
+    return await database.fetch_all(query)
+
+async def get_all_Nasdaq100():
+    query = "SELECT * FROM Nasdaq100"
+    return await database.fetch_all(query)
+
+

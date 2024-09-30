@@ -9,7 +9,8 @@ import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
 import CalculateIcon from '@mui/icons-material/Calculate';
 import ViewListIcon from '@mui/icons-material/ViewList';
 import PeopleIcon from '@mui/icons-material/People';
-import StarIcon from '@mui/icons-material/Star';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import styles from "@/styles/Index.module.css";
 import Link from "next/link"; // Importing Link from Next.js
 
@@ -27,7 +28,7 @@ function Home() {
       <main style={{ color: '#fff', paddingTop: "16%" }}>
         <Section 
           title={`${appName}`} 
-          icon={<StarIcon />} 
+          icon={<AttachMoneyIcon />} 
           isWelcome 
           color="#FFEB3B" 
           description="Welcome to our Value Investing Screener, where you can make informed investment decisions." 
@@ -39,6 +40,24 @@ function Home() {
           description="Learn the basics of how to use our application to maximize your investment potential." 
           link="/register" // Adding a link for Getting Started
         />
+        <Section 
+          title="INDEX FUNDS" 
+          icon={<TrendingUpIcon />} 
+          color="#0095ff" 
+          description="Learn about popular index funds like S&P 500 and Nasdaq 100." 
+        >
+          {/* Only the two buttons for INDEX FUNDS */}
+          <Link href="/S&P500" passHref>
+            <Button variant="contained" color="primary" sx={{ marginRight: '10px' }}>
+              S&P 500
+            </Button>
+          </Link>
+          <Link href="/Nasdaq100" passHref>
+            <Button variant="contained" color="primary">
+              Nasdaq 100
+            </Button>
+          </Link>
+        </Section>
         <Section 
           title="Display Feature" 
           icon={<ViewListIcon />} 
@@ -67,7 +86,7 @@ function Home() {
   );
 }
 
-const Section = ({ title, icon, isWelcome = false, color, description, link }) => {
+const Section = ({ title, icon, isWelcome = false, color, description, link, children }) => {
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
@@ -92,9 +111,9 @@ const Section = ({ title, icon, isWelcome = false, color, description, link }) =
         padding: "50px 0",
         position: "relative",
         marginTop: isWelcome ? "-180px" : "10%",
-        backgroundImage: isWelcome ? `url('/VIS_Background.png')` : 'none', // Background image for the welcome section
-        backgroundSize: 'cover', // Cover the whole area
-        backgroundPosition: 'center', // Position the image on the right
+        backgroundImage: isWelcome ? `url('/VIS_Background.png')` : 'none',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
         '&::before': {
           content: '""',
           position: 'absolute',
@@ -102,14 +121,13 @@ const Section = ({ title, icon, isWelcome = false, color, description, link }) =
           left: 0,
           right: 0,
           bottom: 0,
-          background: 'linear-gradient(to right, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0))', // Adjust gradient opacity
-          zIndex: 1, // Ensure the gradient is above the background image
+          background: 'linear-gradient(to right, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0))',
+          zIndex: 1,
         },
       }}
       className={styles.section}
     >
-      {/* Text Content with higher zIndex */}
-      <Box sx={{ position: 'relative', zIndex: 2, color: '#fff' }}> {/* Ensure text is white */}
+      <Box sx={{ position: 'relative', zIndex: 2, color: '#fff' }}>
         {/* Vertical Line */}
         <Box
           sx={{
@@ -171,7 +189,6 @@ const Section = ({ title, icon, isWelcome = false, color, description, link }) =
               <Typography variant="h1" gutterBottom sx={{ fontSize: '2.6rem', marginTop: '20px' }}>
                 {title}
               </Typography>
-              {/* Description Text */}
               {description && (
                 <Typography variant="body1" paragraph sx={{ marginBottom: '20px' }}>
                   {description}
@@ -182,14 +199,16 @@ const Section = ({ title, icon, isWelcome = false, color, description, link }) =
                   This section introduces the {title.toLowerCase()} feature.
                 </Typography>
               )}
-              {/* Add the button and link only if it's not the welcome section */}
-              {!isWelcome && (
+              {/* Render link button if provided */}
+              {!isWelcome && link && (
                 <Link href={link} passHref>
                   <Button variant="contained" color="primary">
                     {title}
                   </Button>
                 </Link>
               )}
+              {/* Render additional buttons if provided */}
+              {children}
             </Grid>
           </Grid>
         </CSSTransition>
@@ -203,17 +222,16 @@ const TeamSection = () => {
     <Box
       sx={{
         marginTop: "20%",
-        width: "100%", // Set to full width
-        backgroundColor: "#242323", // Set background color to black
-        color: "#fff", // Set text color to white for better contrast
-        padding: "50px 0", // Add vertical padding
+        width: "100%",
+        backgroundColor: "#242323",
+        color: "#fff",
+        padding: "50px 0",
         textAlign: "center",
       }}
     >
-      {/* React Logo Animation */}
       <Box sx={{ marginBottom: "20px" }}>
         <img
-          src="/images/react-logo.svg" // Update this path as needed
+          src="/images/react-logo.svg"
           alt="React Logo"
           className={styles.reactLogo}
         />
@@ -226,7 +244,7 @@ const TeamSection = () => {
         <br />
         Teeratorn Kanjanajit
         <br />
-        Chalisa michaela Salazar
+        Chalisa Michaela Salazar
         <br />
         We are a passionate team dedicated to providing the best experience.
       </Typography>
