@@ -226,6 +226,8 @@ const TeamSection = () => {
         <br />
         Teeratorn Kanjanajit
         <br />
+        Chalisa michaela Salazar
+        <br />
         We are a passionate team dedicated to providing the best experience.
       </Typography>
     </Box>

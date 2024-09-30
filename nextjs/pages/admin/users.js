@@ -156,7 +156,7 @@ const UsersPage = () => {
       }}
     >
       <Typography variant="h4" gutterBottom>
-        User Management
+        USER MANAGEMENTS
       </Typography>
 
       {/* Search Bar */}
@@ -216,15 +216,15 @@ const UsersPage = () => {
                   <TableCell>
                     <IconButton
                       onClick={() => handleEditOpen(user)}
-                      sx={{ color: "#ffffff" }}
+                      sx={{ color: "#0095ff" }}
                     >
                       <EditIcon />
                     </IconButton>
                     <IconButton
                       onClick={() => handleDeleteOpen(user.user_id)}
-                      sx={{ color: "#ffffff" }}
+                      sx={{ color: "#fe0004" }}
                     >
-                      <DeleteIcon />
+                      <DeleteIcon/>
                     </IconButton>
                   </TableCell>
                 </TableRow>
@@ -235,10 +235,10 @@ const UsersPage = () => {
 
       {/* Edit User Dialog */}
       <Dialog open={openEditDialog} onClose={handleEditClose}>
-        <DialogTitle sx={{ color: "#ffffff", backgroundColor: "#333333" }}>
+        <DialogTitle sx={{ color: "#ffffff", backgroundColor: "#0095ff"}}>
           Edit User
         </DialogTitle>
-        <DialogContent sx={{ backgroundColor: "#2e2e2e", color: "#ffffff" }}>
+        <DialogContent sx={{ backgroundColor: "#333", color: "#ffffff" }}>
           {editUser && (
             <>
               <TextField
@@ -253,6 +253,7 @@ const UsersPage = () => {
                   setEditUser({ ...editUser, username: e.target.value })
                 }
                 sx={{
+                  marginTop : "30px" ,
                   input: { color: "#ffffff" },
                   label: { color: "#ffffff" },
                   "& .MuiOutlinedInput-root": {
@@ -298,10 +299,10 @@ const UsersPage = () => {
           )}
         </DialogContent>
         <DialogActions sx={{ backgroundColor: "#333333" }}>
-          <Button onClick={handleEditClose} sx={{ color: "#ffffff" }}>
+          <Button onClick={handleEditClose} sx={{ color: "#ffffff", backgroundColor: "#000"  }}>
             Cancel
           </Button>
-          <Button onClick={handleEditSubmit} sx={{ color: "#ffffff" }}>
+          <Button onClick={handleEditSubmit} sx={{ color: "#ffffff", backgroundColor: "#0095ff"  }}>
             Confirm
           </Button>
         </DialogActions>
@@ -309,15 +310,15 @@ const UsersPage = () => {
 
       {/* Delete User Confirmation Dialog */}
       <Dialog open={openDeleteDialog} onClose={handleDeleteClose}>
-        <DialogTitle sx={{ color: "#ffffff", backgroundColor: "#d32f2f" }}>
+        <DialogTitle sx={{ color: "#ffffff", backgroundColor: "#fe0004" }}>
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <WarningIcon sx={{ color: "#ffffff", marginRight: 1 }} />
-            Confirm Deletion
+            Confirm Delete User
           </Box>
         </DialogTitle>
-        <DialogContent sx={{ backgroundColor: "#d32f2f", color: "#ffffff" }}>
+        <DialogContent sx={{ backgroundColor: "#333", color: "#ffffff" }}>
           <Typography>
-            Are you sure you want to delete this user? This action cannot be undone.
+          Are you sure you want to delete this user? <br></br>This action will delete the user permanently and cannot be undone.
           </Typography>
           {deleteError && (
             <Alert severity="error" sx={{ mt: 2 }}>
@@ -325,11 +326,11 @@ const UsersPage = () => {
             </Alert>
           )}
         </DialogContent>
-        <DialogActions sx={{ backgroundColor: "#d32f2f" }}>
-          <Button onClick={handleDeleteClose} sx={{ color: "#ffffff" }}>
+        <DialogActions sx={{ backgroundColor: "#333" }}>
+          <Button onClick={handleDeleteClose} sx={{ color: "#ffffff", backgroundColor: "#000"}}>
             Cancel
           </Button>
-          <Button onClick={handleDeleteConfirm} sx={{ color: "#ffffff" }}>
+          <Button onClick={handleDeleteConfirm} sx={{ color: "#ffffff", backgroundColor: "#fe0004" }}>
             Confirm
           </Button>
         </DialogActions>
