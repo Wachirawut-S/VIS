@@ -96,7 +96,7 @@ const NavigationLayout = ({ children }) => {
             </Button>
           </Link>
           <Box component="span" sx={{ width: "10px" }} />
-          <Link href="/" passHref>
+          <Link href="/Nasdaq100" passHref>
             <Button
               sx={{
                 color: "#ffffff",
@@ -125,6 +125,22 @@ const NavigationLayout = ({ children }) => {
                 },
               }}
             ><PeopleIcon sx={{ marginRight: "5px" }}/> Community
+            </Button>
+          </Link>
+          <Box component="span" sx={{ width: "10px" }} />
+          <Link href="/aboutus" passHref>
+            <Button
+              sx={{
+                color: "#ffffff",
+                textTransform: "capitalize",
+                border: "1px solid #707070",
+                transition: "0.3s",
+                "&:hover": {
+                  backgroundColor: "#333333",
+                  color: "#ffffff",
+                },
+              }}
+            ><PeopleIcon sx={{ marginRight: "5px" }}/> About
             </Button>
           </Link>
 
