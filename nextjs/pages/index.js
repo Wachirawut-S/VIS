@@ -59,14 +59,14 @@ function Home() {
           </Link>
         </Section>
         <Section 
-          title="Display Feature" 
+          title="Display" 
           icon={<ViewListIcon />} 
           color="#4CAF50" 
           description="Easily view and analyze the financial scores of various stocks." 
           link="/display" // Adding a link for Display Feature
         />
         <Section 
-          title="Calculator Feature" 
+          title="Calculator" 
           icon={<CalculateIcon />} 
           color="#3F51B5" 
           description="Use our calculator to evaluate potential investment opportunities." 
