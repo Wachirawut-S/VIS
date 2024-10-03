@@ -47,7 +47,7 @@ const NavigationLayout = ({ children }) => {
           >
           </Typography>
 
-          <Link href="/display" passHref>
+          <Link href="/DisplayPage" passHref>
             <Button
               sx={{
                 color: "#ffffff",

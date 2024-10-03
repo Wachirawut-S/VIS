@@ -63,7 +63,7 @@ function Home() {
           icon={<ViewListIcon />} 
           color="#4CAF50" 
           description="Easily view and analyze the financial scores of various stocks." 
-          link="/display" // Adding a link for Display Feature
+          link="/DisplayPage" // Adding a link for Display Feature
         />
         <Section 
           title="Calculator" 
