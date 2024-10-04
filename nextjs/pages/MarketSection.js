@@ -23,6 +23,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import PropTypes from 'prop-types';
 
 // Register Chart.js components
 ChartJS.register(
@@ -46,7 +47,7 @@ const generateColor = (index) => {
   return colors[index % colors.length];
 };
 
-const MarketSection = ({ title, apiEndpoint, metrics }) => {
+const MarketSection = ({ title, apiEndpoint, metrics = [] }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -60,7 +61,15 @@ const MarketSection = ({ title, apiEndpoint, metrics }) => {
           throw new Error(`Failed to fetch ${title} data`);
         }
         const fetchedData = await response.json();
-        setData(fetchedData);
+        console.log('Fetched Data:', fetchedData);
+
+        // Adjust based on actual API response structure
+        const dataArray = Array.isArray(fetchedData) ? fetchedData : fetchedData.data;
+        if (!Array.isArray(dataArray)) {
+          throw new Error(`Invalid data format for ${title}`);
+        }
+
+        setData(dataArray);
       } catch (err) {
         console.error(`Error fetching ${title} data:`, err);
         setError(err.message);
@@ -78,8 +87,8 @@ const MarketSection = ({ title, apiEndpoint, metrics }) => {
       const aValue = a.rating;
       const bValue = b.rating;
 
-      if (aValue === null) return 1;
-      if (bValue === null) return -1;
+      if (aValue === null || aValue === undefined) return 1;
+      if (bValue === null || bValue === undefined) return -1;
 
       return sortDirection === "asc" ? aValue - bValue : bValue - aValue; // Descending sort by default
     });
@@ -91,7 +100,7 @@ const MarketSection = ({ title, apiEndpoint, metrics }) => {
   // Prepare chart data
   const chartData = useMemo(() => {
     return {
-      labels: top5.map((item) => item.company), // X-axis labels (Company names)
+      labels: top5.map((item) => item.company || 'N/A'), // X-axis labels (Company names)
       datasets: metrics.map((metric, index) => ({
         label: metric.label,
         data: top5.map((item) =>
@@ -183,9 +192,9 @@ const MarketSection = ({ title, apiEndpoint, metrics }) => {
   return (
     <Box>
       <Typography variant="h5" gutterBottom align="center"
-      sx={{
-        textTransform: 'uppercase', // Makes the text uppercase
-      }}
+        sx={{
+          textTransform: 'uppercase', // Makes the text uppercase
+        }}
       >
         {title}
       </Typography>
@@ -228,18 +237,9 @@ const MarketSection = ({ title, apiEndpoint, metrics }) => {
                       fontWeight: "bold",
                     }}
                   >
-                    {/* Removed Ticker */}
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      color: "#ffffff",
-                      fontSize: "0.9rem",
-                      fontWeight: "bold",
-                    }}
-                  >
                     Company
                   </TableCell>
-                  {metrics.map((metric) => (
+                  {Array.isArray(metrics) && metrics.map((metric) => (
                     <TableCell
                       key={metric.label}
                       sx={{
@@ -254,9 +254,9 @@ const MarketSection = ({ title, apiEndpoint, metrics }) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {top5.map((item, index) => (
+                {Array.isArray(top5) && top5.map((item, index) => (
                   <TableRow
-                    key={item.company}
+                    key={item.company || index}
                     sx={{
                       "&:hover": {
                         backgroundColor: "#333333",
@@ -266,20 +266,17 @@ const MarketSection = ({ title, apiEndpoint, metrics }) => {
                     }}
                   >
                     <TableCell sx={{ color: "#ffffff", fontSize: "0.85rem" }}>
-                      {item.ticker} {/* Display the ticker here without header */}
+                      {item.company || 'N/A'} {/* Display the company name here */}
                     </TableCell>
-                    <TableCell sx={{ color: "#ffffff", fontSize: "0.85rem" }}>
-                      {item.company} {/* Display the company name here */}
-                    </TableCell>
-                    {metrics.map((metric) => (
+                    {Array.isArray(metrics) && metrics.map((metric) => (
                       <TableCell
                         key={metric.key}
                         sx={{ color: "#ffffff", fontSize: "0.85rem" }}
                       >
                         {item[metric.key] !== null && item[metric.key] !== undefined
                           ? metric.unit
-                            ? `${metric.unit} ${typeof item[metric.key] === "number" ? item[metric.key].toFixed(2) : item[metric.key].toFixed(2)}`
-                            : `${item[metric.key].toFixed(2)}`
+                            ? `${metric.unit} ${typeof item[metric.key] === "number" ? item[metric.key].toFixed(2) : item[metric.key]}`
+                            : `${typeof item[metric.key] === "number" ? item[metric.key].toFixed(2) : item[metric.key]}`
                           : "N/A"}
                       </TableCell>
                     ))}
@@ -292,6 +289,18 @@ const MarketSection = ({ title, apiEndpoint, metrics }) => {
       )}
     </Box>
   );
+};
+
+MarketSection.propTypes = {
+  title: PropTypes.string.isRequired,
+  apiEndpoint: PropTypes.string.isRequired,
+  metrics: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.string.isRequired,
+      key: PropTypes.string.isRequired,
+      unit: PropTypes.string,
+    })
+  ).isRequired,
 };
 
 export default MarketSection;
