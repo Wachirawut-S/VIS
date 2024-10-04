@@ -4,7 +4,6 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import Image from "next/image";
 
-// Material UI icons
 import PersonIcon from "@mui/icons-material/Person";
 import ListIcon from '@mui/icons-material/List';
 import SettingsIcon from '@mui/icons-material/Settings';
@@ -15,7 +14,6 @@ import useBearStore from "@/store/useBearStore";
 
 const NavigationLayout = ({ children }) => {
   const router = useRouter();
-  const appName = useBearStore((state) => state.appName); 
   const isLoggedIn = useBearStore((state) => state.isLoggedIn);
   const username = useBearStore((state) => state.username);
   const isAdmin = useBearStore((state) => state.isAdmin); 
@@ -96,7 +94,7 @@ const NavigationLayout = ({ children }) => {
             </Button>
           </Link>
           <Box component="span" sx={{ width: "10px" }} />
-          <Link href="/Nasdaq100" passHref>
+          <Link href="/Calculator" passHref>
             <Button
               sx={{
                 color: "#ffffff",
@@ -167,7 +165,7 @@ const NavigationLayout = ({ children }) => {
 
               <Box component="span" sx={{ width: "10px" }} />
               
-              <Link href="/" passHref>
+              <Link href="/login" passHref>
                 <Button
                   sx={{
                     color: "#ffffff",
@@ -209,7 +207,7 @@ const NavigationLayout = ({ children }) => {
                       },
                     }}
                   >
-                    <SettingsIcon sx={{ marginRight: "5px" }} /> {/* Gear icon for admin */}
+                    <SettingsIcon sx={{ marginRight: "5px" }} /> 
                     Manage Users
                   </Button>
                 </Link>
