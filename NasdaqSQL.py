@@ -1,5 +1,6 @@
 import yfinance as yf
 import psycopg2
+from tqdm import tqdm  # Importing progress bar
 
 # Database connection setup
 conn = psycopg2.connect(
@@ -46,8 +47,8 @@ ticker_symbols = list(set(['ADBE', 'AMD', 'ABNB', 'GOOGL', 'GOOG', 'AMZN', 'AEP'
 # Set a static expected growth rate
 Expected_Growth = 8.0
 
-# Process each ticker symbol
-for ticker_symbol in ticker_symbols:
+# Add progress bar for ticker processing
+for ticker_symbol in tqdm(ticker_symbols, desc="Processing Tickers", ncols=100):
     try:
         # Fetch data using yfinance
         ticker = yf.Ticker(ticker_symbol)
@@ -65,7 +66,7 @@ for ticker_symbol in ticker_symbols:
             "Total_debt": balance_sheet.loc["Total Debt"].values[0] if "Total Debt" in balance_sheet.index else 0,
             "current_asset": balance_sheet.loc["Total Assets"].values[0] if "Total Assets" in balance_sheet.index else 0,
             "current_liability": balance_sheet.loc["Total Liabilities Net Minority Interest"].values[0] if "Total Liabilities Net Minority Interest" in balance_sheet.index else 0,
-            "Cash_and_Cash_Equivalents": (balance_sheet.loc["Cash And Cash Equivalents"].values[0] if "Cash And Cash Equivalents" in balance_sheet.index else 0),
+            "Cash_and_Cash_Equivalents": balance_sheet.loc["Cash And Cash Equivalents"].values[0] if "Cash And Cash Equivalents" in balance_sheet.index else 0,
             "earnings_per_share": info.get("trailingEps"),
             "growth_rate": Expected_Growth,
             "corporate_bond_yield": 4.6,  # Assuming a fixed value
@@ -94,18 +95,12 @@ for ticker_symbol in ticker_symbols:
         c = 0
 
         # Gross Profit Margin
-        if data["Revenue"] != 0:
-            Gross_Profit_Margin = ((data["Revenue"] - data["Cost_of_goods_sold"]) / data["Revenue"]) * 100
-        else:
-            Gross_Profit_Margin = 0
+        Gross_Profit_Margin = ((data["Revenue"] - data["Cost_of_goods_sold"]) / data["Revenue"]) * 100 if data["Revenue"] != 0 else 0
         if Gross_Profit_Margin > 40:
             a += 1
 
         # Return on Equity (ROE)
-        if data["Share_holder_Equity"] != 0:
-            Return_on_equity = (data["Net_Income"] / data["Share_holder_Equity"]) * 100
-        else:
-            Return_on_equity = 0
+        Return_on_equity = (data["Net_Income"] / data["Share_holder_Equity"]) * 100 if data["Share_holder_Equity"] != 0 else 0
         if Return_on_equity > 20:
             a += 1
 
@@ -114,34 +109,22 @@ for ticker_symbol in ticker_symbols:
             a += 1
 
         # SG&A to Revenue
-        if data["Revenue"] != 0 and data["SGA_and_A"] is not None:
-            SGA_to_Revenue = (data["SGA_and_A"] / data["Revenue"]) * 100
-        else:
-            SGA_to_Revenue = None
+        SGA_to_Revenue = (data["SGA_and_A"] / data["Revenue"]) * 100 if data["Revenue"] != 0 and data["SGA_and_A"] is not None else None
         if SGA_to_Revenue is not None and SGA_to_Revenue < 30:
             a += 1
 
         # Debt Level
-        if data["Share_holder_Equity"] != 0:
-            Debt_Equity = data["Total_debt"] / data["Share_holder_Equity"]
-        else:
-            Debt_Equity = 0
+        Debt_Equity = data["Total_debt"] / data["Share_holder_Equity"] if data["Share_holder_Equity"] != 0 else 0
         if Debt_Equity < 0.8:
             b += 1
 
         # Current Ratio
-        if data["current_liability"] != 0:
-            Current_Ratio = data["current_asset"] / data["current_liability"]
-        else:
-            Current_Ratio = 0
+        Current_Ratio = data["current_asset"] / data["current_liability"] if data["current_liability"] != 0 else 0
         if Current_Ratio > 1.5:
             c += 1
 
         # Cash Ratio
-        if data["current_liability"] != 0:
-            Cash_Ratio = data["Cash_and_Cash_Equivalents"] / data["current_liability"]
-        else:
-            Cash_Ratio = 0
+        Cash_Ratio = data["Cash_and_Cash_Equivalents"] / data["current_liability"] if data["current_liability"] != 0 else 0
         if Cash_Ratio > 1:
             c += 1
 
@@ -163,31 +146,23 @@ for ticker_symbol in ticker_symbols:
         x = (a + b) / 8
 
         # Calculate intrinsic value
-        if data["earnings_per_share"] is not None:
-            intrinsic_value = data["earnings_per_share"] * (8.5 + 2 * data["growth_rate"]) * 4.4 / data["corporate_bond_yield"]
-        else:
-            intrinsic_value = 0
+        intrinsic_value = data["earnings_per_share"] * (8.5 + 2 * data["growth_rate"]) * 4.4 / data["corporate_bond_yield"] if data["earnings_per_share"] is not None else 0
 
         # Calculate margin of safety
-        if intrinsic_value > 0:
-            margin_of_safety = (intrinsic_value - data["stock_price"]) / intrinsic_value
-        else:
-            margin_of_safety = None  # or set it to 0 or some other indicator for invalid
+        margin_of_safety = (intrinsic_value - data["stock_price"]) / intrinsic_value if intrinsic_value > 0 else None
 
         # Normalize the margin of safety
-        if margin_of_safety is not None:  # Check if it's not None
+        normalized_value = 0
+        if margin_of_safety is not None:
             if margin_of_safety >= 0.4:
                 normalized_value = 1
             elif margin_of_safety <= 0:
                 normalized_value = 0
             else:
                 normalized_value = margin_of_safety / 0.4
-        else:
-            normalized_value = 0  # or some other default value for invalid margin of safety
 
         # Calculate the rating score
         rating = (normalized_value + x) * 50
-
 
         # Insert into SQL database
         cursor.execute("""
