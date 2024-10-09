@@ -216,13 +216,13 @@ const UsersPage = () => {
                   <TableCell>
                     <IconButton
                       onClick={() => handleEditOpen(user)}
-                      sx={{ color: "#0095ff" }}
+                      sx={{ color: "#0095ff", cursor: "pointer" }}
                     >
                       <EditIcon />
                     </IconButton>
                     <IconButton
                       onClick={() => handleDeleteOpen(user.user_id)}
-                      sx={{ color: "#fe0004" }}
+                      sx={{ color: "#fe0004", cursor: "pointer" }}
                     >
                       <DeleteIcon/>
                     </IconButton>

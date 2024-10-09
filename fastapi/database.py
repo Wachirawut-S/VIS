@@ -1,4 +1,3 @@
-# database.py
 from databases import Database
 import bcrypt
 
@@ -74,4 +73,24 @@ async def get_all_Nasdaq100():
     query = "SELECT * FROM Nasdaq100"
     return await database.fetch_all(query)
 
+# Functions for Calculation History
 
+async def insert_calculation_history(data: dict):
+    query = """
+    INSERT INTO calculation (user_id, username, company_name, stock_price, intrinsic_value, margin_of_safety, 
+                             rating, gross_profit_margin, return_on_equity, roic, sga_to_revenue, 
+                             debt_to_equity, current_ratio, cash_ratio, quick_ratio, roa)
+    VALUES (:user_id, :username, :company_name, :stock_price, :intrinsic_value, :margin_of_safety, 
+            :rating, :gross_profit_margin, :return_on_equity, :roic, :sga_to_revenue, 
+            :debt_to_equity, :current_ratio, :cash_ratio, :quick_ratio, :roa)
+    RETURNING *
+    """
+    return await database.fetch_one(query=query, values=data)
+
+async def get_calculation_history_by_user_id(user_id: int):
+    query = "SELECT * FROM calculation WHERE user_id = :user_id"
+    return await database.fetch_all(query=query, values={"user_id": user_id})
+
+async def delete_calculation_history(history_id: int):
+    query = "DELETE FROM calculation WHERE history_id = :history_id RETURNING *"
+    return await database.fetch_one(query=query, values={"history_id": history_id})

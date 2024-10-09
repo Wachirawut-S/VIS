@@ -37,14 +37,14 @@ export default function Login() {
       }
 
       const data = await response.json();
-      const { username, isAdmin } = data; // Extract isAdmin from response
+      const { username, user_id, isAdmin } = data; // Extract isAdmin from response
 
       setSnackbarMessage('Login successful!');
       setSnackbarSeverity('success');
       setOpenSnackbar(true);
 
       // Set login state in the store with username and isAdmin
-      setLogin(username, isAdmin); // Ensure this line is executed
+      setLogin(username, user_id,  isAdmin); // Ensure this line is executed
 
       // Redirect to index page after successful login
       setTimeout(() => {
