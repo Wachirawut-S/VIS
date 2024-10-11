@@ -24,6 +24,7 @@ import axios from "axios";
 
 import DeleteIcon from '@mui/icons-material/Delete';
 import WarningIcon from '@mui/icons-material/Warning';
+import Divider from "@mui/material/Divider";
 
 const Calculator = () => {
   const router = useRouter(); // Use useRouter for redirection
@@ -271,7 +272,7 @@ const Calculator = () => {
   return (
     <Box sx={{ padding: 4, backgroundColor: "#000", minHeight: "100vh", color: "#ffffff" }}>
       <Typography variant="h4" gutterBottom>
-        FINANCIAL CALCULATOR 
+      <strong>FINANCIAL CALCULATOR </strong>
       </Typography>
 
       <Box sx={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 2, backgroundColor: "#111", padding: 3, borderRadius: "8px" }}>
@@ -304,13 +305,15 @@ const Calculator = () => {
         )}
       </Box>
 
-      <Button variant="contained" color="primary" onClick={calculateAndSubmit} sx={{ marginTop: 2 }}>
+      <Button variant="contained" color="primary" onClick={calculateAndSubmit} sx={{ marginTop: 4  }}>
         Calculate
       </Button>
 
+      <Divider sx={{ backgroundColor: "#ffffff", marginBottom: 2, marginTop:5 }} /> 
+
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 2, marginBottom: 2 }}>
-        <Typography variant="h6">
-          Calculation History
+        <Typography variant="h4" >
+        <strong>Calculation History</strong>
         </Typography>
 
         {/* Search Bar */}
