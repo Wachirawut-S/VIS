@@ -77,7 +77,7 @@ function Home() {
           icon={<PeopleIcon />} 
           color="#FFC107" 
           description="Join our community to discuss and share insights with fellow investors." 
-          link="/community" // Adding a link for Community
+          link="/Forum" // Adding a link for Community
         />
 
         <TeamSection />

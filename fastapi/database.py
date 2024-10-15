@@ -94,3 +94,69 @@ async def get_calculation_history_by_user_id(user_id: int):
 async def delete_calculation_history(history_id: int):
     query = "DELETE FROM calculation WHERE history_id = :history_id RETURNING *"
     return await database.fetch_one(query=query, values={"history_id": history_id})
+
+# Functions for Forum
+async def insert_forum_post(user_id: int, title: str, content: str):
+    query = """
+    INSERT INTO forumPost (user_id, title, content)
+    VALUES (:user_id, :title, :content)
+    RETURNING forum_id, user_id, title, content, created_at
+    """
+    values = {"user_id": user_id, "title": title, "content": content}
+    return await database.fetch_one(query=query, values=values)
+
+async def get_latest_forum_posts():
+    query = """
+    SELECT forumPost.forum_id, forumPost.user_id, forumPost.title, forumPost.content, forumPost.created_at, users.username 
+    FROM forumPost 
+    JOIN users ON forumPost.user_id = users.user_id
+    ORDER BY forumPost.created_at DESC
+    """
+    return await database.fetch_all(query)
+
+# Update a forum post
+async def update_forum_post(forum_id: int, title: str, content: str):
+    query = """
+    UPDATE forumPost 
+    SET title = :title, content = :content 
+    WHERE forum_id = :forum_id
+    RETURNING forum_id, user_id, title, content, created_at
+    """
+    values = {"forum_id": forum_id, "title": title, "content": content}
+    return await database.fetch_one(query=query, values=values)
+
+# Delete a forum post
+async def delete_forum_post(forum_id: int):
+    try:
+        query = "DELETE FROM forumPost WHERE forum_id = :forum_id RETURNING *"
+        values = {"forum_id": forum_id}
+        result = await database.fetch_one(query=query, values=values)
+        print(f"Deleted forum post: {result}")  # Log the result of the delete operation
+        return result
+    except Exception as e:
+        print(f"Database error when deleting forum post {forum_id}: {str(e)}")
+        raise
+
+# Functions for Forum Replies
+async def insert_forum_reply(user_id: int, forum_id: int, content: str):
+    query = """
+    INSERT INTO forumReply (user_id, forum_id, content)
+    VALUES (:user_id, :forum_id, :content)
+    RETURNING reply_id, user_id, forum_id, content, created_at
+    """
+    values = {"user_id": user_id, "forum_id": forum_id, "content": content}
+    return await database.fetch_one(query=query, values=values)
+
+async def get_replies_for_post(forum_id: int):
+    query = """
+    SELECT forumReply.reply_id, forumReply.user_id, forumReply.forum_id, forumReply.content, forumReply.created_at, users.username
+    FROM forumReply
+    JOIN users ON forumReply.user_id = users.user_id
+    WHERE forumReply.forum_id = :forum_id
+    ORDER BY forumReply.created_at ASC
+    """
+    return await database.fetch_all(query=query, values={"forum_id": forum_id})
+
+async def delete_forum_reply(reply_id: int):
+    query = "DELETE FROM forumReply WHERE reply_id = :reply_id RETURNING *"
+    return await database.fetch_one(query=query, values={"reply_id": reply_id})

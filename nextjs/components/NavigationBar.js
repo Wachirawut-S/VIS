@@ -110,7 +110,7 @@ const NavigationLayout = ({ children }) => {
             </Button>
           </Link>
           <Box component="span" sx={{ width: "10px" }} />
-          <Link href="/" passHref>
+          <Link href="/Forum" passHref>
             <Button
               sx={{
                 color: "#ffffff",

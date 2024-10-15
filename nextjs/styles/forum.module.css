@@ -1,0 +1,40 @@
+.forumPost {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .forumPost:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  } 
+  
+  .replyBox {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .textField {
+    background-color: #fff;
+    color: #fff;
+  }
+  
+  .textField .MuiInputBase-input {
+    color: #fff; /* Text color */
+  }
+  
+  .replies {
+    margin-top: 10px;
+    background-color: #222;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  
+  .reply {
+    padding: 5px 0;
+    border-bottom: 1px solid #444;
+  }
+  
+  .reply:last-child {
+    border-bottom: none;
+  }
+  

@@ -3,7 +3,7 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from typing import Optional, List
-from database import get_all_Nasdaq100  # Consistent naming
+from database import get_all_Nasdaq100
 import math
 from decimal import Decimal
 
@@ -12,7 +12,7 @@ router = APIRouter()
 # Pydantic model for Nasdaq100 response
 class Nasdaq100(BaseModel):
     company: str
-    stock_price: Optional[float]  # Allowing null values
+    stock_price: Optional[float]
     intrinsic_value: Optional[float]
     margin_of_safety: Optional[float]
     rating: Optional[float]

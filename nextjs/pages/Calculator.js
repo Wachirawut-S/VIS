@@ -271,7 +271,7 @@ const Calculator = () => {
 
   return (
     <Box sx={{ padding: 4, backgroundColor: "#000", minHeight: "100vh", color: "#ffffff" }}>
-      <Typography variant="h4" gutterBottom>
+      <Typography variant="h2" gutterBottom>
       <strong>FINANCIAL CALCULATOR </strong>
       </Typography>
 

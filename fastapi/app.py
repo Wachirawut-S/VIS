@@ -5,6 +5,7 @@ from routes.users import router as users_router
 from routes.sp500 import router as sp500_router  # Import the SP500 router
 from routes.Nasdaq100 import router as nasdaq100_router  # Import the Nasdaq100 router
 from routes.Calculator import router as calculator_router  
+from routes.forum import router as forum_router  
 
 app = FastAPI()
 
@@ -13,6 +14,7 @@ app.include_router(users_router, prefix="/api")
 app.include_router(sp500_router, prefix="/api")  # Include SP500 router
 app.include_router(nasdaq100_router, prefix="/api")  # Include Nasdaq100 router
 app.include_router(calculator_router, prefix="/api")  # Include Nasdaq100 router
+app.include_router(forum_router, prefix="/api") 
 
 @app.on_event("startup")
 async def startup():

@@ -2,7 +2,7 @@ from fastapi import APIRouter, FastAPI, HTTPException
 from pydantic import BaseModel
 from typing import Optional, List
 from datetime import datetime
-from database import *  # Ensure your database functions are imported
+from database import *
 
 router = APIRouter()
 
@@ -13,13 +13,12 @@ class User(BaseModel):
     password_hash: str
     email: str
     created_at: datetime
-    status: int  # Include status in the user response
-
+    status: int 
 # Endpoint to get all users
 @router.get("/users", response_model=List[User])
 async def read_users():
-    query = "SELECT * FROM users"  # Adjust based on your database query method
-    users = await database.fetch_all(query)  # Fetch all users
+    query = "SELECT * FROM users" 
+    users = await database.fetch_all(query) 
     return users
 
 # Pydantic model for user update
@@ -27,17 +26,6 @@ class UserUpdate(BaseModel):
    username: Optional[str]
    password_hash: Optional[str]
    email: Optional[str] 
-
-
-# Pydantic model for user response
-class User(BaseModel):
-    user_id: int
-    username: str
-    password_hash: str
-    email: str
-    created_at: datetime
-    status: int  # Include status in the user response
-
 
 # Pydantic model for login
 class UserLogin(BaseModel):
@@ -48,15 +36,7 @@ class UserCreate(BaseModel):
     username: str
     password_hash: str
     email: str
-    status: Optional[int] = 0  # Default to user
-
-class User(BaseModel):
-    user_id: int
-    username: str
-    password_hash: str
-    email: str
-    created_at: datetime
-    status: int  # Include status in the user response
+    status: Optional[int] = 0 
 
 # Endpoint to create a new user
 @router.post("/users/create", response_model=User)

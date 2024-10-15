@@ -69,8 +69,8 @@ const DisplayPage = () => {
         color: "#ffffff",
       }}
     >
-      <Typography variant="h4" gutterBottom>
-        S&P500 Index
+      <Typography variant="h2" gutterBottom>
+      <strong>S&P500 INDEX</strong>
       </Typography>
 
       {/* Sort Options and Search Bar */}

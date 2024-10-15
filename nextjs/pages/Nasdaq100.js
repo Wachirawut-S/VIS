@@ -70,8 +70,8 @@ const DisplayPage = () => {
         color: "#ffffff",
       }}
     >
-      <Typography variant="h4" gutterBottom>
-        Nasdaq 100 Index
+      <Typography variant="h2" gutterBottom>
+      <strong>NASDAQ 100 INDEX</strong>
       </Typography>
 
       {/* Sort Options and Search Bar */}
