@@ -16,7 +16,6 @@ import {
 } from "@mui/material";
 
 const DisplayPage = () => {
-  // Updated state variables to reflect Nasdaq100
   const [nasdaq100, setNasdaq100] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(true);
@@ -54,10 +53,20 @@ const DisplayPage = () => {
     const aValue = sortBy === "company" ? a.company : a.rating;
     const bValue = sortBy === "company" ? b.company : b.rating;
 
-    if (sortDirection === "asc") {
-      return aValue > bValue ? 1 : -1;
+    if (sortBy === "company") {
+      // For string comparison (company name)
+      if (sortDirection === "asc") {
+        return aValue.localeCompare(bValue);
+      } else {
+        return bValue.localeCompare(aValue);
+      }
     } else {
-      return aValue < bValue ? 1 : -1;
+      // For numeric comparison (rating)
+      if (sortDirection === "asc") {
+        return aValue - bValue;
+      } else {
+        return bValue - aValue;
+      }
     }
   });
 
@@ -71,7 +80,7 @@ const DisplayPage = () => {
       }}
     >
       <Typography variant="h2" gutterBottom>
-      <strong>NASDAQ 100 INDEX</strong>
+        <strong>NASDAQ 100 INDEX</strong>
       </Typography>
 
       {/* Sort Options and Search Bar */}
@@ -87,8 +96,7 @@ const DisplayPage = () => {
             sx={{
               borderRadius: "8px",
               borderColor: sortBy === "company" ? "#0095ff" : "#333",
-              backgroundColor:
-                sortBy === "company" ? "#0095ff" : "transparent",
+              backgroundColor: sortBy === "company" ? "#0095ff" : "transparent",
               color: "#ffffff",
               "&:hover": {
                 backgroundColor: "#0095ff",
@@ -173,17 +181,17 @@ const DisplayPage = () => {
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
-            minHeight: "80vh", // Adjust as needed
+            minHeight: "80vh",
           }}
         >
           <img
-            src="/VIS_Background.png" // Ensure correct path
+            src="/VIS_Background.png"
             alt="Loading"
             style={{
               width: "30%",
               height: "auto",
               marginBottom: "20px",
-            }} // Adjust size as needed
+            }}
           />
           <CircularProgress sx={{ color: "#ffffff" }} />
         </Box>
@@ -194,130 +202,48 @@ const DisplayPage = () => {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell
-                  sx={{
-                    color: "#ffffff",
-                    fontSize: "0.9rem",
-                    fontWeight: "bold",
-                  }}
-                >
+                {/* Table headers */}
+                <TableCell sx={{ color: "#ffffff", fontSize: "0.9rem", fontWeight: "bold" }}>
                   Company
                 </TableCell>
-                <TableCell
-                  sx={{
-                    color: "#ffffff",
-                    fontSize: "0.9rem",
-                    fontWeight: "bold",
-                  }}
-                >
+                <TableCell sx={{ color: "#ffffff", fontSize: "0.9rem", fontWeight: "bold" }}>
                   Stock Price
                 </TableCell>
-                <TableCell
-                  sx={{
-                    color: "#ffffff",
-                    fontSize: "0.9rem",
-                    fontWeight: "bold",
-                  }}
-                >
+                <TableCell sx={{ color: "#ffffff", fontSize: "0.9rem", fontWeight: "bold" }}>
                   Intrinsic Value
                 </TableCell>
-                <TableCell
-                  sx={{
-                    color: "#ffffff",
-                    fontSize: "0.9rem",
-                    fontWeight: "bold",
-                  }}
-                >
+                <TableCell sx={{ color: "#ffffff", fontSize: "0.9rem", fontWeight: "bold" }}>
                   Margin of Safety
                 </TableCell>
-                <TableCell
-                  sx={{
-                    color: "#ffffff",
-                    fontSize: "0.9rem",
-                    fontWeight: "bold",
-                  }}
-                >
+                <TableCell sx={{ color: "#ffffff", fontSize: "0.9rem", fontWeight: "bold" }}>
                   Rating
                 </TableCell>
-                <TableCell
-                  sx={{
-                    color: "#ffffff",
-                    fontSize: "0.9rem",
-                    fontWeight: "bold",
-                  }}
-                >
+                {/* Additional columns */}
+                <TableCell sx={{ color: "#ffffff", fontSize: "0.9rem", fontWeight: "bold" }}>
                   Gross Profit Margin
                 </TableCell>
-                <TableCell
-                  sx={{
-                    color: "#ffffff",
-                    fontSize: "0.9rem",
-                    fontWeight: "bold",
-                  }}
-                >
+                <TableCell sx={{ color: "#ffffff", fontSize: "0.9rem", fontWeight: "bold" }}>
                   Return on Equity
                 </TableCell>
-                <TableCell
-                  sx={{
-                    color: "#ffffff",
-                    fontSize: "0.9rem",
-                    fontWeight: "bold",
-                  }}
-                >
+                <TableCell sx={{ color: "#ffffff", fontSize: "0.9rem", fontWeight: "bold" }}>
                   ROIC
                 </TableCell>
-                <TableCell
-                  sx={{
-                    color: "#ffffff",
-                    fontSize: "0.9rem",
-                    fontWeight: "bold",
-                  }}
-                >
+                <TableCell sx={{ color: "#ffffff", fontSize: "0.9rem", fontWeight: "bold" }}>
                   SGA to Revenue
                 </TableCell>
-                <TableCell
-                  sx={{
-                    color: "#ffffff",
-                    fontSize: "0.9rem",
-                    fontWeight: "bold",
-                  }}
-                >
+                <TableCell sx={{ color: "#ffffff", fontSize: "0.9rem", fontWeight: "bold" }}>
                   Debt to Equity
                 </TableCell>
-                <TableCell
-                  sx={{
-                    color: "#ffffff",
-                    fontSize: "0.9rem",
-                    fontWeight: "bold",
-                  }}
-                >
+                <TableCell sx={{ color: "#ffffff", fontSize: "0.9rem", fontWeight: "bold" }}>
                   Current Ratio
                 </TableCell>
-                <TableCell
-                  sx={{
-                    color: "#ffffff",
-                    fontSize: "0.9rem",
-                    fontWeight: "bold",
-                  }}
-                >
+                <TableCell sx={{ color: "#ffffff", fontSize: "0.9rem", fontWeight: "bold" }}>
                   Cash Ratio
                 </TableCell>
-                <TableCell
-                  sx={{
-                    color: "#ffffff",
-                    fontSize: "0.9rem",
-                    fontWeight: "bold",
-                  }}
-                >
+                <TableCell sx={{ color: "#ffffff", fontSize: "0.9rem", fontWeight: "bold" }}>
                   Quick Ratio
                 </TableCell>
-                <TableCell
-                  sx={{
-                    color: "#ffffff",
-                    fontSize: "0.9rem",
-                    fontWeight: "bold",
-                  }}
-                >
+                <TableCell sx={{ color: "#ffffff", fontSize: "0.9rem", fontWeight: "bold" }}>
                   ROA
                 </TableCell>
               </TableRow>
@@ -330,100 +256,49 @@ const DisplayPage = () => {
                     "&:hover": {
                       backgroundColor: "#333333",
                     },
-                    backgroundColor:
-                      index % 2 === 0 ? "#1E1E1E" : "#272727",
+                    backgroundColor: index % 2 === 0 ? "#1E1E1E" : "#272727",
                   }}
                 >
-                  <TableCell
-                    sx={{ color: "#ffffff", fontSize: "0.85rem" }}
-                  >
+                  <TableCell sx={{ color: "#ffffff", fontSize: "0.85rem" }}>
                     {item.company}
                   </TableCell>
-                  <TableCell
-                    sx={{ color: "#ffffff", fontSize: "0.85rem" }}
-                  >
-                    {item.stock_price !== null
-                      ? item.stock_price.toFixed(2)
-                      : "N/A"}
-                  </TableCell>
-                  <TableCell
-                    sx={{ color: "#ffffff", fontSize: "0.85rem" }}
-                  >
-                    {item.intrinsic_value !== null
-                      ? item.intrinsic_value.toFixed(2)
-                      : "N/A"}
-                  </TableCell>
-                  <TableCell
-                    sx={{ color: "#ffffff", fontSize: "0.85rem" }}
-                  >
-                    {item.margin_of_safety !== null
-                      ? item.margin_of_safety.toFixed(2)
-                      : "N/A"}
+                  <TableCell sx={{ color: "#ffffff", fontSize: "0.85rem" }}>
+                    {item.stock_price !== null ? item.stock_price.toFixed(2) : "N/A"}
                   </TableCell>
                   <TableCell sx={{ color: "#ffffff", fontSize: "0.85rem" }}>
-                    {item.rating !== null 
-                        ? (item.gross_profit_margin !== null 
-                            ? item.gross_profit_margin.toFixed(2) 
-                            : "N/A") 
-                        : "N/A"}
-                </TableCell>
-                  <TableCell
-                    sx={{ color: "#ffffff", fontSize: "0.85rem" }}
-                  >
-                    {item.gross_profit_margin !== null
-                      ? item.gross_profit_margin.toFixed(2)
-                      : "N/A"}
+                    {item.intrinsic_value !== null ? item.intrinsic_value.toFixed(2) : "N/A"}
                   </TableCell>
-                  <TableCell
-                    sx={{ color: "#ffffff", fontSize: "0.85rem" }}
-                  >
-                    {item.return_on_equity !== null
-                      ? item.return_on_equity.toFixed(2)
-                      : "N/A"}
+                  <TableCell sx={{ color: "#ffffff", fontSize: "0.85rem" }}>
+                    {item.margin_of_safety !== null ? item.margin_of_safety.toFixed(2) : "N/A"}
                   </TableCell>
-                  <TableCell
-                    sx={{ color: "#ffffff", fontSize: "0.85rem" }}
-                  >
+                  <TableCell sx={{ color: "#ffffff", fontSize: "0.85rem" }}>
+                    {item.rating !== null ? item.rating.toFixed(2) : "N/A"}
+                  </TableCell>
+                  <TableCell sx={{ color: "#ffffff", fontSize: "0.85rem" }}>
+                    {item.gross_profit_margin !== null ? item.gross_profit_margin.toFixed(2) : "N/A"}
+                  </TableCell>
+                  <TableCell sx={{ color: "#ffffff", fontSize: "0.85rem" }}>
+                    {item.return_on_equity !== null ? item.return_on_equity.toFixed(2) : "N/A"}
+                  </TableCell>
+                  <TableCell sx={{ color: "#ffffff", fontSize: "0.85rem" }}>
                     {item.roic !== null ? item.roic.toFixed(2) : "N/A"}
                   </TableCell>
-                  <TableCell
-                    sx={{ color: "#ffffff", fontSize: "0.85rem" }}
-                  >
-                    {item.sga_to_revenue !== null
-                      ? item.sga_to_revenue.toFixed(2)
-                      : "N/A"}
+                  <TableCell sx={{ color: "#ffffff", fontSize: "0.85rem" }}>
+                    {item.sga_to_revenue !== null ? item.sga_to_revenue.toFixed(2) : "N/A"}
                   </TableCell>
-                  <TableCell
-                    sx={{ color: "#ffffff", fontSize: "0.85rem" }}
-                  >
-                    {item.debt_to_equity !== null
-                      ? item.debt_to_equity.toFixed(2)
-                      : "N/A"}
+                  <TableCell sx={{ color: "#ffffff", fontSize: "0.85rem" }}>
+                    {item.debt_to_equity !== null ? item.debt_to_equity.toFixed(2) : "N/A"}
                   </TableCell>
-                  <TableCell
-                    sx={{ color: "#ffffff", fontSize: "0.85rem" }}
-                  >
-                    {item.current_ratio !== null
-                      ? item.current_ratio.toFixed(2)
-                      : "N/A"}
+                  <TableCell sx={{ color: "#ffffff", fontSize: "0.85rem" }}>
+                    {item.current_ratio !== null ? item.current_ratio.toFixed(2) : "N/A"}
                   </TableCell>
-                  <TableCell
-                    sx={{ color: "#ffffff", fontSize: "0.85rem" }}
-                  >
-                    {item.cash_ratio !== null
-                      ? item.cash_ratio.toFixed(2)
-                      : "N/A"}
+                  <TableCell sx={{ color: "#ffffff", fontSize: "0.85rem" }}>
+                    {item.cash_ratio !== null ? item.cash_ratio.toFixed(2) : "N/A"}
                   </TableCell>
-                  <TableCell
-                    sx={{ color: "#ffffff", fontSize: "0.85rem" }}
-                  >
-                    {item.quick_ratio !== null
-                      ? item.quick_ratio.toFixed(2)
-                      : "N/A"}
+                  <TableCell sx={{ color: "#ffffff", fontSize: "0.85rem" }}>
+                    {item.quick_ratio !== null ? item.quick_ratio.toFixed(2) : "N/A"}
                   </TableCell>
-                  <TableCell
-                    sx={{ color: "#ffffff", fontSize: "0.85rem" }}
-                  >
+                  <TableCell sx={{ color: "#ffffff", fontSize: "0.85rem" }}>
                     {item.roa !== null ? item.roa.toFixed(2) : "N/A"}
                   </TableCell>
                 </TableRow>
@@ -437,3 +312,4 @@ const DisplayPage = () => {
 };
 
 export default DisplayPage;
+  

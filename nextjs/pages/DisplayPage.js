@@ -33,7 +33,7 @@ const DisplayPage = () => {
             metrics={[
               { key: "stock_price", label: "Stock Price", unit: "$" },
               { key: "intrinsic_value", label: "Intrinsic Value", unit: "$" },
-              { key: "margin_of_safety", label: "Margin of Safety", unit: "%" },
+              { key: "margin_of_safety", label: "Margin of Safety", unit: "" },
               { key: "rating", label: "Rating", unit: "" },
             ]}
           />
