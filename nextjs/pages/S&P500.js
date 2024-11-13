@@ -269,8 +269,10 @@ const DisplayPage = () => {
                     {item.intrinsic_value !== null ? item.intrinsic_value.toFixed(2) : "N/A"}
                   </TableCell>
                   <TableCell sx={{ color: "#ffffff", fontSize: "0.85rem" }}>
-                    {item.margin_of_safety !== null ? item.margin_of_safety.toFixed(2) : "N/A"}
-                  </TableCell>
+  {item.margin_of_safety !== null 
+    ? `${(item.margin_of_safety * 100).toFixed(2)}%` 
+    : "N/A"}
+</TableCell>
                   <TableCell sx={{ color: "#ffffff", fontSize: "0.85rem" }}>
                     {item.rating !== null ? item.rating.toFixed(2) : "N/A"}
                   </TableCell>
