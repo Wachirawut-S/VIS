@@ -147,7 +147,6 @@ for ticker_symbol in tqdm(ticker_symbols, desc="Processing Tickers", ncols=100):
 
         # Calculate intrinsic value
         intrinsic_value = data["earnings_per_share"] * (8.5 + 2 * data["growth_rate"]) * 4.4 / data["corporate_bond_yield"] if data["earnings_per_share"] is not None else 0
-
         # Calculate margin of safety
         margin_of_safety = (intrinsic_value - data["stock_price"]) / intrinsic_value if intrinsic_value > 0 else None
 
