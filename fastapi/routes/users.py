@@ -58,8 +58,8 @@ async def create_user(user: UserCreate):
 
 # Endpoint to get a user by user_id
 @router.get("/users/{user_id}", response_model=User)
-async def read_user(user_id: int):
-   result = await get_user(user_id)
+async def get_user_by_id(user_id: int):
+   result = await get_user_by_id(user_id)
    if result is None:
        raise HTTPException(status_code=404, detail="User not found")
    return result
